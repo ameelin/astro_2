@@ -1,0 +1,17 @@
+<p>layout works!</p>
+<!-- layout.component.html -->
+
+<mat-toolbar color="primary">
+    <!-- Top navigation content -->
+  </mat-toolbar>
+  
+  <div class="flex-container">
+    <mat-sidenav #sidenav mode="side">
+      <!-- Side navigation content -->
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <!-- Main content area -->
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </div>
+  

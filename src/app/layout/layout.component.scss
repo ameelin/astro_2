@@ -1,0 +1,8 @@
+/* layout.component.scss */
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 64px); /* Adjust for top toolbar height */
+  }
+  
