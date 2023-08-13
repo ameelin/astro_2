@@ -1,26 +1,40 @@
-<div class="login-container">
-    <div class="login-form">
-      <!-- Login form or content -->
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Log in</mat-card-title>
+      </mat-card-header>
       <form (submit)="onLoginFormSubmit(loginForm)" #loginForm="ngForm">
-        <mat-form-field>
-          <input matInput placeholder="Username" name="username" #username="ngModel" ngModel required />
-        </mat-form-field>
-        <!-- Display validation message if username field is empty and touched -->
-        <div *ngIf="username.invalid && (username.dirty || username.touched)" class="error-message">
-          Username is required.
-        </div>
-        
-        <mat-form-field>
-          <input matInput type="password" placeholder="Password" name="password" #password="ngModel" ngModel required minlength="6" />
-          <mat-icon matSuffix>visibility_off</mat-icon>
-        </mat-form-field>
-        <!-- Display validation message if password field is empty and touched -->
-        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error-message">
-          Password is required and should be at least 6 characters.
-        </div>
-        
-        <button mat-raised-button color="primary" type="submit">Login</button>
+        <mat-card-content>
+          <table>
+            <tr>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="Username" name="username" #username="ngModel" ngModel required />
+                </mat-form-field>
+                <!-- Display validation message if username field is empty and touched -->
+                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="error-message">
+                  Username is required.
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field>
+                  <input matInput type="password" placeholder="Password" name="password" #password="ngModel" ngModel required minlength="6" />
+                  <mat-icon matSuffix>visibility_off</mat-icon>
+                </mat-form-field>
+                <!-- Display validation message if password field is empty and touched -->
+                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error-message">
+                  Password is required and should be at least 6 characters.
+                </div>
+              </td>
+            </tr>
+          </table>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit">Login</button>
+        </mat-card-actions>
       </form>
-    </div>
+    </mat-card>
   </div>
   

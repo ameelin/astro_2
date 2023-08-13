@@ -1,24 +1,39 @@
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .login-form {
-    max-width: 400px; /* Adjust as needed */
-    width: 100%;
-    display: flex;
-    flex-direction: column; /* Stack form fields vertically */
-    gap: 16px; /* Add spacing between form fields */
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
-  }
-  
-  @media (max-width: 452px) {
-    .login-form {
-      flex-direction: column;
-      gap: 8px;
-    }
-  }
-  
+/* Prevent margin and overflow on the body */
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Prevent any potential overflow */
+}
+
+.box {
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Apply styling to form fields */
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 16px; /* Add spacing between form fields */
+}
+
+/* Style form input fields */
+.mat-input-element {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Apply styling to buttons */
+.mat-card-actions {
+  display: flex;
+  justify-content: center; /* Center align the content horizontally */
+  margin-top: 16px; /* Add spacing above buttons */
+}

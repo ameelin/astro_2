@@ -8,6 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -18,6 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatListModule,
     MatIconModule,
+    MatCardModule,
+    MatButtonModule,
     // ... add more Angular Material modules as needed
   ],
 })
