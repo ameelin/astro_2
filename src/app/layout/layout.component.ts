@@ -12,6 +12,7 @@ export class LayoutComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
   toggleSidenav(): void {
+    console.log("toggleSidenav click received")
     this.sidenav.toggle();
   }
 }

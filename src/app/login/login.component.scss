@@ -1,0 +1,24 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .login-form {
+    max-width: 400px; /* Adjust as needed */
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Stack form fields vertically */
+    gap: 16px; /* Add spacing between form fields */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+  }
+  
+  @media (max-width: 452px) {
+    .login-form {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+  

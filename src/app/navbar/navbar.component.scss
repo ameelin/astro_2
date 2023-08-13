@@ -1,0 +1,20 @@
+/* Apply custom styles to the navigation list */
+.navigation-list {
+    padding: 16px 0; /* Adjust as needed */
+    list-style-type: none;
+    margin: 0;
+  }
+  
+  /* Apply custom styles to the navigation items */
+  .navigation-item a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 8px;
+  }
+  
+  
+  .navigation-item:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  

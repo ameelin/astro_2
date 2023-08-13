@@ -1,8 +1,29 @@
-/* layout.component.scss */
-
+/* Base styles for your layout */
 .flex-container {
-    display: flex;
-    flex-direction: row;
-    height: calc(100vh - 64px); /* Adjust for top toolbar height */
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 64px); /* Adjust for top toolbar height */
+}
+
+/* Adjust the toolbar and content area widths */
+.mat-toolbar {
+  flex: 0 0 auto; /* Fix the toolbar width */
+}
+
+.mat-sidenav-container {
+  flex: 1 1 auto; /* Allow the content area to expand */
+  padding: 16px; /* Add spacing around the content area */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  /* Adjustments for smaller screens */
+  .flex-container {
+    flex-direction: column;
+    height: auto;
   }
   
+  .mat-sidenav-container {
+    padding: 8px; /* Reduce spacing around the content area */
+  }
+}

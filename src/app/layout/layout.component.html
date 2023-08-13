@@ -1,17 +1,17 @@
-<p>layout works!</p>
-<!-- layout.component.html -->
-
 <mat-toolbar color="primary">
-    <!-- Top navigation content -->
-  </mat-toolbar>
-  
-  <div class="flex-container">
+  <!-- Top navigation content -->
+  <app-toolbar (sidenavToggle)="toggleSidenav()"></app-toolbar>
+</mat-toolbar>
+
+<div class="flex-container">
+  <mat-sidenav-container mat-sidenav-container >
     <mat-sidenav #sidenav mode="side">
-      <!-- Side navigation content -->
+        <!-- Side navigation content -->
+        <app-navbar></app-navbar>
     </mat-sidenav>
     <mat-sidenav-content>
-      <!-- Main content area -->
-      <router-outlet></router-outlet>
+        <!-- Main content area -->
+        <ng-content></ng-content> 
     </mat-sidenav-content>
-  </div>
-  
+  </mat-sidenav-container>
+</div>
