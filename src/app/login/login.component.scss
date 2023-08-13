@@ -17,6 +17,10 @@ body {
   width: 100%;
   padding: 16px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center content vertically */
 }
 
 /* Apply styling to form fields */
@@ -36,4 +40,17 @@ body {
   display: flex;
   justify-content: center; /* Center align the content horizontally */
   margin-top: 16px; /* Add spacing above buttons */
+}
+
+.center-text {
+  text-align: center; /* Center-align the text */
+}
+
+.error-message {
+  color: red;
+  text-align: center; /* Center-align the error message */
+}
+
+.login-title {
+  text-align: center;
 }
