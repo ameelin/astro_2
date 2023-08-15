@@ -7,9 +7,14 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class ToolbarComponent {
   @Output() sidenavToggle = new EventEmitter<void>();
+  isLoggedIn = true;
 
   onSidenavToggle(): void {
     console.log("onSidenavToggle");
     this.sidenavToggle.emit();
+  }
+
+  logout(){
+    
   }
 }

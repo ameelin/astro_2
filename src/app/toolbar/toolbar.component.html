@@ -1,7 +1,17 @@
 <mat-toolbar color="primary">
-    <button mat-icon-button (click)="onSidenavToggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <!-- Add more toolbar content as needed -->
-  </mat-toolbar>
-  
+  <mat-toolbar-row>
+    <div class="left-content">
+      <button mat-icon-button (click)="onSidenavToggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h1 class="site-title" [ngStyle]="{ color: isLoggedIn ? 'red' : 'white' }">Astro Tinder</h1>
+    </div>
+    <div class="right-content" *ngIf="isLoggedIn">
+      <div class="user-info">
+        <mat-icon>account_circle</mat-icon>
+        <span class="username" [ngStyle]="{ color: isLoggedIn ? 'red' : 'white' }">John Doe</span>
+      </div>
+      <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
