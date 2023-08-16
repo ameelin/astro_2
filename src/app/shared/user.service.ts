@@ -1,9 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
+  userLoggedIn: EventEmitter<boolean> = new EventEmitter<boolean>();
+  isLoggedIn = false;
 
-  constructor() { }
+  setLoggedIn(loggedIn:boolean) {
+    // Logic to handle user login
+    this.isLoggedIn = loggedIn;
+    this.userLoggedIn.emit(loggedIn);
+  }
+
+  // Other methods and logic
 }

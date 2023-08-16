@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <div class="left-content">
-      <button mat-icon-button (click)="onSidenavToggle()">
+      <button mat-icon-button (click)="onSidenavToggle()" [disabled]="!isLoggedIn" [class.active]="isLoggedIn">
         <mat-icon>menu</mat-icon>
       </button>
       <h1 class="site-title" [ngStyle]="{ color: isLoggedIn ? 'red' : 'white' }">Astro Tinder</h1>
