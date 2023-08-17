@@ -62,6 +62,14 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "dev": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"
@@ -74,6 +82,9 @@
             },
             "development": {
               "browserTarget": "astro_2:build:development"
+            },
+            "dev": {
+              "browserTarget": "astro_2:build:dev"
             }
           },
           "defaultConfiguration": "development"

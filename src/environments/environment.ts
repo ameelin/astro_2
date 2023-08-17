@@ -2,9 +2,12 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
-  production: false
-};
+const envConfig = require('../assets/config/environment.config.json');
+//const environment = envConfig[process.env['NODE_ENV'] || 'dev'];
+const environment = envConfig['dev'];
+
+export { environment };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
