@@ -20,9 +20,15 @@ export class LoginComponent {
   constructor(private auth : AuthService, private userService: UserService, private router : Router) { }
 
   login(loginForm: NgForm): void {
-    this.email = loginForm.value.email;
-    this.password = loginForm.value.password;
-   
+    if(this.email == '') {
+      alert('Please enter email');
+      return;
+    }
+
+    if(this.password == '') {
+      alert('Please enter password');
+      return;
+    }
 
     this.auth.login(this.email, this.password).subscribe(
       (res) => {

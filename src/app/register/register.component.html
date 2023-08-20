@@ -1,1 +1,36 @@
-<p>register works!</p>
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title class="login-title">Register</mat-card-title>
+      </mat-card-header>
+      <form (ngSubmit)="register()" #registerForm="ngForm">
+        <mat-card-content>
+          <mat-form-field>
+            <mat-label>Username (Email)</mat-label>
+            <input matInput name="email" [(ngModel)]="email" required email>
+            <mat-error *ngIf="registerForm.controls['email']?.invalid && (registerForm.controls['email']?.dirty || registerForm.controls['email']?.touched)">
+                Please enter a valid email address.
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" [(ngModel)]="password" required minlength="6">
+            <mat-error *ngIf="registerForm.controls['password']?.invalid && (registerForm.controls['password']?.dirty || registerForm.controls['password']?.touched)">
+                Password must be at least 6 characters long.
+            </mat-error>
+            <mat-icon matSuffix (click)="togglePasswordVisibility()">
+                {{ showPassword ? 'visibility' : 'visibility_off' }}
+            </mat-icon>
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">Register</button>
+        </mat-card-actions>
+      </form>
+      <mat-card-content>
+        <a routerLink="/login" style="text-decoration: none;">Have an account? <span class="text-danger">Login</span></a>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

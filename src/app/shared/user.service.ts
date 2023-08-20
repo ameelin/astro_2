@@ -94,4 +94,11 @@ export class UserService {
         })
     );
   }
+
+  isUserLoggedIn(){
+    if(this.userLoggedIn){
+      return true;
+    }
+   return  false
+  }
 }

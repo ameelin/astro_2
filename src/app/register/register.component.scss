@@ -1,0 +1,57 @@
+/* Prevent margin and overflow on the body */
+body {
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  .login-wrapper {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Prevent any potential overflow */
+  }
+  
+  .box {
+    max-width: 400px;
+    width: 100%;
+    padding: 16px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center content vertically */
+  }
+  
+  /* Apply styling to form fields */
+  .mat-form-field {
+    width: 100%;
+    margin-bottom: 16px; /* Add spacing between form fields */
+  }
+  
+  /* Style form input fields */
+  .mat-input-element {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Apply styling to buttons */
+  .mat-card-actions {
+    display: flex;
+    justify-content: center; /* Center align the content horizontally */
+    margin-top: 16px; /* Add spacing above buttons */
+  }
+  
+  .center-text {
+    text-align: center; /* Center-align the text */
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center; /* Center-align the error message */
+  }
+  
+  .login-title {
+    text-align: center;
+  }
+  
