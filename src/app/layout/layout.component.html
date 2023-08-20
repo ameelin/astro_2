@@ -1,7 +1,7 @@
 <app-toolbar (sidenavToggle)="toggleSidenav()"></app-toolbar>
 <div class="flex-container">
   <mat-sidenav-container mat-sidenav-container >
-    <mat-sidenav #sidenav mode="side">
+    <mat-sidenav #sidenav mode="side" *ngIf="userService.isLoggedIn">
         <!-- Side navigation content -->
         <app-navbar></app-navbar>
     </mat-sidenav>

@@ -1,6 +1,8 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../shared/auth.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,9 +11,10 @@ import { Router } from '@angular/router';
 })
 export class ToolbarComponent {
   @Output() sidenavToggle = new EventEmitter<void>();
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   isLoggedIn = false;
 
-  constructor(private userService: UserService,private router : Router) {}
+  constructor(private auth : AuthService, private userService: UserService,private router : Router) {}
 
   ngOnInit() {
     this.userService.userLoggedIn.subscribe((loggedIn) => {
@@ -25,10 +28,11 @@ export class ToolbarComponent {
   }
 
   logout(){
+    this.auth.logout();
     localStorage.removeItem("userId");
     localStorage.clear();
     this.router.navigate(['/login']);
     this.userService.setLoggedIn(false);
-    this.sidenavToggle.emit();
+    this.sidenav.close();
   }
 }

@@ -2,6 +2,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-layout',
@@ -10,6 +11,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class LayoutComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
+  constructor(public userService: UserService){}
 
   toggleSidenav(): void {
     console.log("toggleSidenav click received")
