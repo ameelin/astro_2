@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 interface Photo {
   url: string;
@@ -22,6 +25,9 @@ interface Photo {
   ]
 })
 export class FindMatchesComponent implements OnInit {
+  
+  noMorePhotos: boolean = false;
+
   photos: Photo[] = [
     { url: 'assets/images/bugs.jpeg' },
     { url: 'assets/images/tasmanian.png' },
@@ -30,34 +36,42 @@ export class FindMatchesComponent implements OnInit {
   ];
   displayedPhotos: Photo[] = [];
 
-  constructor() { }
+  constructor(private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.loadDisplayedPhotos();
   }
 
   loadDisplayedPhotos() {
-    if (this.photos.length > 0) {
+    if (this.photos.length != 0) {
+      alert(this.photos.length);
       this.displayedPhotos.unshift(this.photos.shift() as Photo);
+    } else {
+      this.noMorePhotos = true;
+      // setTimeout(() => {
+      //   this.router.navigate(['/show-matches']);
+      // }, 1000);
+      this.snackBar.open('No more photos', 'OK', {
+        duration: 3000, // Duration in milliseconds
+        verticalPosition: 'top', // Position at the top
+      });
+      this.router.navigate(['/show-matches']);
     }
   }
-  
 
+  //reject
   swipeLeft(photo: Photo) {
     console.log('Swiped left on photo:', photo);
     // Handle left swipe action here
     this.displayedPhotos.shift();
-    if (this.photos.length > 0) {
-      this.loadDisplayedPhotos();
-    }
+    this.loadDisplayedPhotos();
   }
 
+  //select
   swipeRight(photo: Photo) {
     console.log('Swiped right on photo:', photo);
     // Handle right swipe action here
     this.displayedPhotos.shift();
-    if (this.photos.length > 0) {
-      this.loadDisplayedPhotos();
-    }
+    this.loadDisplayedPhotos();
   }
 }
