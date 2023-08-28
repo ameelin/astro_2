@@ -37,11 +37,14 @@ export class LoginComponent {
           // obtain the user's token using res.user.getIdToken() method
           res.user.getIdToken().then((token: string) => {
             localStorage.removeItem("userId");
+            localStorage.removeItem(token);
+            localStorage.removeItem('uid');
             localStorage.clear();
             // Store the token in localStorage
             localStorage.setItem('token', token);
             localStorage.setItem('userId', this.email);
-          });
+            localStorage.setItem('uid', res.user?.uid);
+                      });
         }
         this.userService.checkUserExists(this.email).subscribe(
           (userExists) => {

@@ -20,6 +20,9 @@ import { ShowMatchesComponent } from './show-matches/show-matches.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component'; 
+import { provideStorage } from '@angular/fire/storage';
+import { getStorage } from 'firebase/storage';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 
 @NgModule({
   declarations: [
@@ -43,6 +46,8 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
     ReactiveFormsModule,  
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideStorage(()=>getStorage()),
     MaterialModule
   ],
   providers: [],

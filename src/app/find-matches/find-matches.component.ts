@@ -44,13 +44,9 @@ export class FindMatchesComponent implements OnInit {
 
   loadDisplayedPhotos() {
     if (this.photos.length != 0) {
-      alert(this.photos.length);
       this.displayedPhotos.unshift(this.photos.shift() as Photo);
     } else {
       this.noMorePhotos = true;
-      // setTimeout(() => {
-      //   this.router.navigate(['/show-matches']);
-      // }, 1000);
       this.snackBar.open('No more photos', 'OK', {
         duration: 3000, // Duration in milliseconds
         verticalPosition: 'top', // Position at the top

@@ -3,11 +3,23 @@
       <mat-card-header>
         <mat-card-title class="card-title">Edit User</mat-card-title>
       </mat-card-header>
+      <div class="profile-image">
+        <img
+          width="120"
+          height="120"
+          class="margin-top mat-elevation-z1"
+          [src]="user.photoURL ?? '/assets/images/image-placeholder.png'"
+        />
+        <button mat-mini-fab (click)="inputField.click()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <input #inputField hidden type="file" (change)="uploadFile($event, user.uid, user.userId)" />
       <form #editForm="ngForm" (ngSubmit)="onSubmit()" class="edit-form">
         <mat-card-content>
           <mat-form-field>
             <mat-label>Desired User Name</mat-label>
-            <input matInput type="text" name="desiredUserName" [(ngModel)]="desiredUserName" required minlength="6" maxlength="8">
+            <input matInput type="text" name="desiredUserName" [(ngModel)]="user.desiredUserName" required minlength="6" maxlength="8">
             <mat-error *ngIf="editForm.controls['desiredUserName']?.invalid && (editForm.controls['desiredUserName']?.dirty || editForm.controls['desiredUserName']?.touched)">
               <span *ngIf="editForm.controls['desiredUserName']?.errors?.['required']">Please enter a desired user name.</span>
               <span *ngIf="editForm.controls['desiredUserName']?.errors?.['minlength']">Desired user name must be at least 6 characters long.</span>
@@ -18,7 +30,7 @@
           
           <mat-form-field>
             <mat-label>Birth Star</mat-label>
-            <mat-select matNativeControl name="birthStar" [(ngModel)]="birthStar" required>
+            <mat-select matNativeControl name="birthStar" [(ngModel)]="user.birthStar" required>
                 <mat-option value="" disabled>Select Birth Star</mat-option>
                 <mat-option value="star1">Star 1</mat-option>
                 <mat-option value="star2">Star 2</mat-option>
@@ -31,7 +43,7 @@
 
           <mat-form-field>
             <mat-label>Birth Date (mm/dd/yyyy)</mat-label>
-            <input matInput type="text" name="birthDate" [(ngModel)]="birthDate" required pattern="^\d{2}/\d{2}/\d{4}$">
+            <input matInput type="text" name="birthDate" [(ngModel)]="user.birthDate" required pattern="^\d{2}/\d{2}/\d{4}$">
             <mat-error *ngIf="editForm.controls['birthDate']?.invalid && (editForm.controls['birthDate']?.dirty || editForm.controls['birthDate']?.touched)">
             Please enter a valid birth date in the format mm/dd/yyyy.
             </mat-error>
@@ -39,7 +51,7 @@
 
           <mat-form-field>
             <mat-label>Longitude of Birth Place</mat-label>
-            <input matInput type="text" name="longitude" [(ngModel)]="longitude" required pattern="^(\d{1,3}\.\d{2})$">
+            <input matInput type="text" name="longitude" [(ngModel)]="user.longitude" required pattern="^(\d{1,3}\.\d{2})$">
             <mat-error *ngIf="editForm.controls['longitude']?.invalid && (editForm.controls['longitude']?.dirty || editForm.controls['longitude']?.touched)">
             Please enter a valid longitude in the format xx.xx.
             </mat-error>
@@ -47,7 +59,7 @@
 
           <mat-form-field>
             <mat-label>Longitude Direction</mat-label>
-            <mat-select name="longitudeDirection" [(ngModel)]="longitudeDirection" required>
+            <mat-select name="longitudeDirection" [(ngModel)]="user.longitudeDirection" required>
                 <mat-option value="" disabled>Select Longitude Direction</mat-option>
                 <mat-option value="east">East</mat-option>
                 <mat-option value="west">West</mat-option>
@@ -56,7 +68,7 @@
                 Please select a longitude direction.
               </mat-error>
           </mat-form-field>
-
+          
         </mat-card-content>
         <mat-card-actions>
           <button mat-raised-button color="primary" type="submit" [disabled]="!isFormValid()">Submit</button>

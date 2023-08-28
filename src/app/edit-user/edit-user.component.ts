@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { User } from './user.model';
+import { ImageUploadService } from '../shared/image-upload.service';
+import { switchMap, tap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-user',
@@ -8,15 +12,25 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {
-  userId: string = '';
-  desiredUserName: string = '';
-  birthStar: string = '';
-  birthDate: string = '';
-  longitude: string = '';
-  longitudeDirection: string = ''; 
-  modifiedDate : string = '';
+  user: User = {
+    userId: localStorage.getItem("userId")!,
+    uid: localStorage.getItem("uid")!,
+    desiredUserName: '',
+    birthStar: '',
+    birthDate: '',
+    longitude: '',
+    longitudeDirection: '', 
+    modifiedDate : '',
+    modifiedBy : '',
+    photoURL: ''
+  };
 
-  constructor(private userService: UserService, private router : Router) {}
+  constructor(
+    private userService: UserService,
+    private imageUploadService: ImageUploadService,
+    private snackBar: MatSnackBar,
+    private router : Router
+  ){}
 
   ngOnInit() {
     if(this.userService.isUserLoggedIn()){
@@ -28,30 +42,18 @@ export class EditUserComponent implements OnInit {
         console.error('Error loading user data:', error);
       }
     }
-    
-    
-    
   }
-
 
   onSubmit(): void {
     if (this.isFormValid()) {
-      this.userId = localStorage.getItem("userId") ?? '';
-      const user = {
-        userId: this.userId,
-        desiredUserName: this.desiredUserName,
-        birthStar: this.birthStar,
-        birthDate: this.birthDate,
-        longitude: this.longitude,
-        longitudeDirection: this.longitudeDirection,
-        modifiedDate: new Date().toLocaleDateString('en-US'),
-        modifiedBy: this.userId
-      };
+      this.user.userId = localStorage.getItem("userId") ?? '';
+      this.user.modifiedDate = new Date().toLocaleDateString('en-US');
+      this.user.modifiedBy = this.user.userId;
 
       //Now update user data
-      this.userService.editUser(user).subscribe(
+      this.userService.editUser(this.user).subscribe(
         () => {
-          console.log(`User with ID ${user.userId} updated successfully!`);
+          console.log(`User with ID ${this.user.userId} updated successfully!`);
           this.router.navigate(['/find-matches']);
         },
         (error) => {
@@ -65,26 +67,26 @@ export class EditUserComponent implements OnInit {
 
   isFormValid(): boolean {
     // Check that desiredUserName and birthStar have values
-    if (this.desiredUserName && this.desiredUserName.trim() === '' || this.birthStar.trim() === '') {
+    if (this.user.desiredUserName.trim() === '' || this.user.birthStar.trim() === '') {
       return false;
     }
   
     // Check desiredUserName length is between 6 and 8 characters
-    if (this.desiredUserName && this.desiredUserName.trim().length < 6 || this.desiredUserName.trim().length > 8) {
+    if (this.user.desiredUserName.trim().length < 6 || this.user.desiredUserName.trim().length > 8) {
       return false;
     }
   
     // Additional validation for birthDate and longitude if they are filled
-    if (this.birthDate && this.birthDate.trim() !== '' && !/^\d{2}\/\d{2}\/\d{4}$/.test(this.birthDate)) {
+    if (this.user.birthDate.trim() !== '' && !/^\d{2}\/\d{2}\/\d{4}$/.test(this.user.birthDate)) {
       return false;
     }
   
-    if (this.longitude && this.longitude.trim() !== '' && !/^(\d{1,3}\.\d{2})$/.test(this.longitude)) {
+    if (this.user.longitude.trim() !== '' && !/^(\d{1,3}\.\d{2})$/.test(this.user.longitude)) {
       return false;
     }
   
     // Validate longitude direction if longitude is filled
-    if (this.longitude.trim() !== '' && this.longitudeDirection.trim() === '') {
+    if (this.user.longitude.trim() !== '' && this.user.longitudeDirection.trim() === '') {
       return false;
     }
   
@@ -93,20 +95,40 @@ export class EditUserComponent implements OnInit {
 
   loadUserData(userId: string ): void {
     this.userService.getUserData(userId).subscribe(
-    (userData) => {
-        //alert(userId)
+      (userData) => {
         // Update the form fields with the user data
-        this.desiredUserName = userData?.desiredUserName ?? '';
-        this.birthStar = userData?.birthStar ?? '';
-        this.birthDate = userData?.birthDate ?? '';
-        this.longitude = userData?.longitude ?? '';
-        this.longitudeDirection = userData?.longitudeDirection ?? '';
+        this.user.desiredUserName = userData?.desiredUserName ?? '';
+        this.user.birthStar = userData?.birthStar ?? '';
+        this.user.birthDate = userData?.birthDate ?? '';
+        this.user.longitude = userData?.longitude ?? '';
+        this.user.longitudeDirection = userData?.longitudeDirection ?? '';
+        this.user.photoURL = userData?.photoURL ?? '';
       },
       (error) => {
         console.error('Error fetching user data:', error);
       }
     );
   }
-  
-  
+
+  uploadFile(event: any, uid:string, userId:string) {
+    console.log(uid);
+    console.log(userId);
+    this.imageUploadService
+      .uploadImage(event.target.files[0], `images/profile/${uid}`)
+      .pipe(
+        tap(() => {
+          this.snackBar.open('Image uploaded successfully', 'Close', {
+            duration: 3000,
+            panelClass: ['success-snackbar'], // Add your custom CSS class
+          });
+        }),
+        switchMap((photoURL) =>
+          this.userService.editUser({
+            userId,
+            photoURL,
+          })
+        )
+      )
+      .subscribe();
+  }
 }
