@@ -5,6 +5,7 @@ import { User } from './user.model';
 import { ImageUploadService } from '../shared/image-upload.service';
 import { switchMap, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-edit-user',
@@ -25,18 +26,23 @@ export class EditUserComponent implements OnInit {
     photoURL: ''
   };
 
+  starNames: string[] = [];
+
   constructor(
     private userService: UserService,
     private imageUploadService: ImageUploadService,
     private snackBar: MatSnackBar,
+    private firestore: AngularFirestore,
     private router : Router
   ){}
 
   ngOnInit() {
     if(this.userService.isUserLoggedIn()){
       try {
+        this.fetchStarNames();
         const userId = localStorage.getItem("userId") ?? '';
         this.loadUserData(userId);
+        
         console.log('User data loaded successfully');
       } catch (error) {
         console.error('Error loading user data:', error);
@@ -131,4 +137,21 @@ export class EditUserComponent implements OnInit {
       )
       .subscribe();
   }
+
+  fetchStarNames() {
+    this.firestore.collection('stars').doc('starNames').valueChanges().subscribe(
+      (starNamesDoc: any) => {
+        if (starNamesDoc && starNamesDoc.names) {
+          this.starNames = starNamesDoc.names;
+        } else {
+          this.starNames = []; // Handle the case if the document or names array is missing
+        }
+      },
+      (error) => {
+        console.error('Error fetching star names:', error);
+      }
+    );
+  }
+  
+  
 }
