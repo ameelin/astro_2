@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from './user.model';
+import { User } from '../../models/user.model';
 import { ImageUploadService } from '../shared/image-upload.service';
 import { switchMap, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';

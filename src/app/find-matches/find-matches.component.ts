@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../shared/user.service';
+import { MatchesService } from '../shared/matches.service';
+import { User } from '../../models/user.model';
 
-
-interface Photo {
-  url: string;
-}
 
 @Component({
   selector: 'app-find-matches',
@@ -27,27 +26,40 @@ interface Photo {
 export class FindMatchesComponent implements OnInit {
   
   noMorePhotos: boolean = false;
+  users: User[] = [];
+  displayedUsers: User[] = [];
+  currentUserId: string;
 
-  photos: Photo[] = [
-    { url: 'assets/images/bugs.jpeg' },
-    { url: 'assets/images/tasmanian.png' },
-    { url: 'assets/images/sylvester.jpeg' },
-    // ... more photos
-  ];
-  displayedPhotos: Photo[] = [];
-
-  constructor(private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private userService: UserService, private matchesService: MatchesService, private router: Router, private snackBar: MatSnackBar) {
+    this.currentUserId = <string>localStorage.getItem('userId') || '';
+   }
 
   ngOnInit(): void {
-    this.loadDisplayedPhotos();
+    if (this.currentUserId) {
+      // Fetch users dynamically (e.g., 20 users), excluding the current user
+      const limit = 20;
+      this.userService.getUsersExceptCurrentUser(limit, this.currentUserId).subscribe(
+        (users: unknown[]) => {
+          this.users = users as User[]; // Explicitly cast to User[] type
+          this.loadDisplayedUsers();
+        },
+        (error) => {
+          // Handle any errors that may occur during the HTTP request.
+          console.error('Error fetching users:', error);
+        }
+      );
+      
+    }
   }
 
-  loadDisplayedPhotos() {
-    if (this.photos.length != 0) {
-      this.displayedPhotos.unshift(this.photos.shift() as Photo);
+ 
+
+  loadDisplayedUsers() {
+    if (this.users.length !== 0) {
+      this.displayedUsers.unshift(this.users.shift() as User);
     } else {
       this.noMorePhotos = true;
-      this.snackBar.open('No more photos', 'OK', {
+      this.snackBar.open('No more users', 'OK', {
         duration: 3000, // Duration in milliseconds
         verticalPosition: 'top', // Position at the top
       });
@@ -56,18 +68,20 @@ export class FindMatchesComponent implements OnInit {
   }
 
   //reject
-  swipeLeft(photo: Photo) {
-    console.log('Swiped left on photo:', photo);
+  swipeLeft(currentUserId:string, user: User, astroMethod:string) {
+    console.log('Swiped left on user:', user);
     // Handle left swipe action here
-    this.displayedPhotos.shift();
-    this.loadDisplayedPhotos();
+    this.matchesService.saveMatch(currentUserId, user, astroMethod);
+    this.displayedUsers.shift();
+    this.loadDisplayedUsers();
   }
 
   //select
-  swipeRight(photo: Photo) {
-    console.log('Swiped right on photo:', photo);
+  swipeRight(currentUserId:string, user: User, astroMethod:string) {
+    console.log('Swiped right on user:', user);
     // Handle right swipe action here
-    this.displayedPhotos.shift();
-    this.loadDisplayedPhotos();
+    this.matchesService.saveMatch(currentUserId, user, astroMethod);
+    this.displayedUsers.shift();
+    this.loadDisplayedUsers();
   }
 }

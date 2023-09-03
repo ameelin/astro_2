@@ -101,4 +101,11 @@ export class UserService {
     }
    return  false
   }
+
+  getUsersExceptCurrentUser(limit: number, currentUserId: string) {
+    // Fetch users from Firestore, excluding the current user
+    return this.firestore.collection('users', (ref) =>
+      ref.where('userId', '!=', currentUserId).limit(limit)
+    ).valueChanges();
+  }
 }
