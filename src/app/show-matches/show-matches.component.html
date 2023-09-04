@@ -1,1 +1,22 @@
-<p>show-matches works!</p>
+<div class="show-matches-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="match-table-box">
+      <h2>Selected Matches</h2>
+      <mat-table [dataSource]="selectedMatchesDataSource" matSort>
+        <!-- Define your table columns here -->
+        <ng-container *ngFor="let col of displayedColumns">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element[col] }}</mat-cell>
+        </ng-container>
+      </mat-table>
+  
+      <h2>Rejected Matches</h2>
+      <mat-table [dataSource]="rejectedMatchesDataSource" matSort>
+        <!-- Define your table columns here -->
+        <ng-container *ngFor="let col of displayedColumns">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element[col] }}</mat-cell>
+        </ng-container>
+      </mat-table>
+    </mat-card>
+  </div>
+  

@@ -1,0 +1,45 @@
+/* show-matches.component.css */
+
+/* Apply styles to the container element */
+.show-matches-wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Prevent any potential overflow */
+  }
+  
+  /* Style the table container */
+  .match-table-box {
+    max-width: 400px;
+    width: 100%;
+    padding: 16px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center content vertically */
+  }
+  
+  /* Apply styling to table elements */
+  .mat-table {
+    width: 100%;
+    margin-bottom: 16px; /* Add spacing between tables */
+  }
+  
+  /* Style table headers */
+  .mat-header-cell {
+    text-align: center; /* Center-align table headers */
+  }
+  
+  /* Style table cells */
+  .mat-cell {
+    text-align: center; /* Center-align table cells */
+  }
+  
+  /* Apply styling to headers */
+  h2 {
+    text-align: center;
+  }
+  

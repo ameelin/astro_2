@@ -122,6 +122,10 @@ export class MatchesService {
   
     return totalCompatibilityScore;
   }
+
+  getAllMatches() {
+    return this.firestore.collection('matches').valueChanges();
+  }
   
 
   
