@@ -3,8 +3,8 @@
     <div *ngFor="let user of displayedUsers; let i = index" class="swipe-card" [class.active]="i === 0" [@cardAnimation]>
       <div class="swipe-card-image" [style.backgroundImage]="'url(' + user.photoURL + ')'"></div>
       <div class="swipe-actions">
-        <button class="swipe-button left" (click)="swipeLeft(currentUserId,user,'Vedic')" *ngIf="i === 0">Reject</button>
-        <button class="swipe-button right" (click)="swipeRight(currentUserId,user,'Vedic')" *ngIf="i === 0">Select</button>
+        <button class="swipe-button left" (click)="swipeLeft(currentUserId, user,'Vedic')" *ngIf="i === 0">Reject</button>
+        <button class="swipe-button right" (click)="swipeRight(currentUserId, user,'Vedic')" *ngIf="i === 0">Select</button>
       </div>
     </div>
   </ng-container>

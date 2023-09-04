@@ -3,8 +3,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../shared/user.service';
-import { MatchesService } from '../shared/matches.service';
+
 import { User } from '../../models/user.model';
+import { MatchesService } from '../shared/matches.service';
 
 
 @Component({
@@ -68,19 +69,19 @@ export class FindMatchesComponent implements OnInit {
   }
 
   //reject
-  swipeLeft(currentUserId:string, user: User, astroMethod:string) {
-    console.log('Swiped left on user:', user);
+  swipeLeft(currentUserId:string, selectedUser: User, astroMethod:string) {
+    console.log('Swiped left on user:', selectedUser);
     // Handle left swipe action here
-    this.matchesService.saveMatch(currentUserId, user, astroMethod);
+    this.matchesService.saveMatch(currentUserId, selectedUser, true, astroMethod);
     this.displayedUsers.shift();
     this.loadDisplayedUsers();
   }
 
   //select
-  swipeRight(currentUserId:string, user: User, astroMethod:string) {
-    console.log('Swiped right on user:', user);
+  swipeRight(currentUserId:string, selectedUser: User, astroMethod:string) {
+    console.log('Swiped right on user:', selectedUser);
     // Handle right swipe action here
-    this.matchesService.saveMatch(currentUserId, user, astroMethod);
+    this.matchesService.saveMatch(currentUserId, selectedUser, false, astroMethod);
     this.displayedUsers.shift();
     this.loadDisplayedUsers();
   }
