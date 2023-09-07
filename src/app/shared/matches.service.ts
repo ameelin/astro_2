@@ -131,6 +131,10 @@ export class MatchesService {
       ref.where('userId', '==', userId)
     ).valueChanges();
   }
+
+  // getMatchesOfUser(userId: string): Observable<Match | undefined> {
+  //   return this.firestore.collection<Match>('matches').doc(userId).valueChanges();
+  // }
   
 
   getShowMatches(userId: string, matches: Match[]): Observable<ShowMatch[]> {
@@ -191,7 +195,8 @@ export class MatchesService {
       // Wait for the user data to be available
       const userData = await userDataPromise;
       const currentUserStar = userData?.birthStar ?? '';
-  
+      console.log('matchedUserStar:', currentUserStar);
+
       return currentUserStar;
     } catch (error) {
       console.error('Error fetching user data:', error);

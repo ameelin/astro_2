@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatchesService } from '../shared/matches.service';
 import { ShowMatch } from 'src/models/showmatch.model';
 import { Match } from 'src/models/match.model';
-import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-show-matches',
@@ -11,9 +10,8 @@ import { Observable, of } from 'rxjs';
 })
 export class ShowMatchesComponent implements OnInit {
   currentUserId: string;
-  // Initialize as  empty observables
-  selectedMatches$: Observable<ShowMatch[]> = of([]); 
-  rejectedMatches$: Observable<ShowMatch[]> = of([]);
+  selectedMatches: ShowMatch[] = [];
+  rejectedMatches: ShowMatch[] = [];
 
   constructor(private matchService: MatchesService) {
     this.currentUserId = localStorage.getItem("userId")!;
@@ -24,8 +22,8 @@ export class ShowMatchesComponent implements OnInit {
       this.matchService.getShowMatches(this.currentUserId, matches).subscribe((showMatches: ShowMatch[]) => {
         // Sort the data by the 'total' property
         const sortedShowMatches = showMatches.sort((a, b) => b.Total - a.Total);
-        this.selectedMatches$ = of(sortedShowMatches.filter(match => !match.Rejected));
-        this.rejectedMatches$ = of(sortedShowMatches.filter(match => match.Rejected));
+        this.selectedMatches = sortedShowMatches.filter(match => !match.Rejected);
+        this.rejectedMatches = sortedShowMatches.filter(match => match.Rejected);
       });
     });
   }
