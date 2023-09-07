@@ -1,22 +1,35 @@
 <div class="show-matches-wrapper" fxLayout="row" fxLayoutAlign="center center">
-    <mat-card class="match-table-box">
+  <mat-card class="match-table-box">
+    <ng-container *ngIf="(selectedMatches$ | async)?.length > 0; else noSelectedMatches">
       <h2>Selected Matches</h2>
-      <mat-table [dataSource]="selectedMatchesDataSource" matSort>
+      <mat-table [dataSource]="selectedMatches$ | async" matSort>
         <!-- Define your table columns here -->
-        <ng-container *ngFor="let col of displayedColumns">
+        <ng-container *ngFor="let col of ['User Id', 'Health', 'Wealth', 'Temperament', 'Children', 'Compatibility', 'Sex', 'Total']">
           <mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</mat-header-cell>
           <mat-cell *matCellDef="let element">{{ element[col] }}</mat-cell>
         </ng-container>
       </mat-table>
-  
+    </ng-container>
+
+    <ng-template #noSelectedMatches>
+      <p>No Selected Matches</p>
+      <button mat-raised-button color="primary" routerLink="/find-matches">Find Matches</button>
+    </ng-template>
+
+    <ng-container *ngIf="(rejectedMatches$ | async)?.length > 0; else noRejectedMatches">
       <h2>Rejected Matches</h2>
-      <mat-table [dataSource]="rejectedMatchesDataSource" matSort>
+      <mat-table [dataSource]="rejectedMatches$ | async" matSort>
         <!-- Define your table columns here -->
-        <ng-container *ngFor="let col of displayedColumns">
+        <ng-container *ngFor="let col of ['User Id', 'Health', 'Wealth', 'Temperament', 'Children', 'Compatibility', 'Sex', 'Total']">
           <mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</mat-header-cell>
           <mat-cell *matCellDef="let element">{{ element[col] }}</mat-cell>
         </ng-container>
       </mat-table>
-    </mat-card>
-  </div>
-  
+    </ng-container>
+
+    <ng-template #noRejectedMatches>
+      <p>No Rejected Matches</p>
+      <button mat-raised-button color="primary" routerLink="/find-matches">Find Matches</button>
+    </ng-template>
+  </mat-card>
+</div>

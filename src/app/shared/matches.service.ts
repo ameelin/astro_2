@@ -3,6 +3,9 @@ import { User } from '../../models/user.model';
 import { StarDocument } from '../../models/stardata.model';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { UserService } from './user.service';
+import { Observable, from, map } from 'rxjs';
+import { ShowMatch } from 'src/models/showmatch.model';
+import { Match } from 'src/models/match.model';
 
 @Injectable({
   providedIn: 'root',
@@ -123,11 +126,77 @@ export class MatchesService {
     return totalCompatibilityScore;
   }
 
-  getAllMatches() {
-    return this.firestore.collection('matches').valueChanges();
+  getMatchesOfUser(userId: string): Observable<Match[]> {
+    return this.firestore.collection<Match>('matches', (ref) =>
+      ref.where('userId', '==', userId)
+    ).valueChanges();
   }
   
 
-  
+  getShowMatches(userId: string, matches: Match[]): Observable<ShowMatch[]> {
+    return from((async () => {
+      const currentUserStar = await this.findUserBirthStar(userId);
+      const starCollection = this.firestore.collection(currentUserStar);
+      const showMatches: ShowMatch[] = [];
 
+      for (const match of matches) {
+        const matchedUserStar = await this.findUserBirthStar(match.userId);
+        const querySnapshot = await starCollection.ref.where('star', '==', matchedUserStar).get();
+
+        if (!querySnapshot.empty) {
+          const matchedUserDoc = querySnapshot.docs[0].data() as StarDocument;
+          const health = matchedUserDoc['Dina Porutham'];
+          const wealth = matchedUserDoc['Stree Deergha Porutham'];
+          const temperament = matchedUserDoc['Gana Porutham'];
+          const children = matchedUserDoc['Mahendra Porutham'];
+          const compatibility = matchedUserDoc['Rasiaythipathi Porutham'];
+          const sex = matchedUserDoc['Yoni Porutham'];
+          const total = matchedUserDoc.total;
+
+          const showMatch: ShowMatch = {
+            ['User Id']: match.userId,
+            ['Health']: health,
+            ['Wealth']: wealth,
+            ['Temperament']: temperament,
+            ['Children']: children,
+            ['Compatibility']: compatibility,
+            ['Sex']: sex,
+            ['Total']: total,
+            ['Rejected']: match.rejected
+          };
+
+          showMatches.push(showMatch);
+        }
+      }
+
+      return showMatches;
+    })());
+  }
+
+
+  private async findUserBirthStar(currentUserId: string): Promise<string> {
+    try {
+      // Create a Promise to fetch user data
+      const userDataPromise = new Promise<any>((resolve, reject) => {
+        this.userService.getUserData(currentUserId).subscribe(
+          (userData) => {
+            resolve(userData);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      });
+  
+      // Wait for the user data to be available
+      const userData = await userDataPromise;
+      const currentUserStar = userData?.birthStar ?? '';
+  
+      return currentUserStar;
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      return ''; // Return an empty string or handle the error as needed
+    }
+  }
+  
 }
