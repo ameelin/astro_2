@@ -5,7 +5,7 @@
       <h2>Selected Matches</h2>
       <mat-table [dataSource]="selectedMatches" matSort>
         <!-- Define your table columns here -->
-        <ng-container *ngFor="let col of displayedColumns">
+        <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
           <mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</mat-header-cell>
           <mat-cell *matCellDef="let element">{{ element[col] }}</mat-cell>
         </ng-container>
@@ -28,7 +28,7 @@
       <h2>Rejected Matches</h2>
       <mat-table [dataSource]="rejectedMatches" matSort>
         <!-- Define your table columns here -->
-        <ng-container *ngFor="let col of displayedColumns">
+        <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
           <mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</mat-header-cell>
           <mat-cell *matCellDef="let element">{{ element[col] }}</mat-cell>
         </ng-container>

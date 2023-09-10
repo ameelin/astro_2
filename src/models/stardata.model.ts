@@ -4,7 +4,7 @@ export interface StarDocument {
     ['Mahendra Porutham']: number; 
     ['Rajju Porutham']: number; 
     ['Rasi Porutham']: number; 
-    ['Rasiaythipathi Porutham']: number; 
+    ['Rasiyathipathi Porutham']: number; 
     ['Stree Deergha Porutham']: number; 
     ['Vasya Porutham']: number; 
     ['Veda Porutham']: number; 

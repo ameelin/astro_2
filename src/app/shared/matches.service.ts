@@ -126,28 +126,6 @@ export class MatchesService {
     return totalCompatibilityScore;
   }
 
-  // getMatchesOfUser(userId: string): Observable<Match[]> {
-  //   return this.firestore.collection<Match>('matches', (ref) =>
-  //     ref.where('userId', '==', userId)
-  //   ).valueChanges();
-  // }
-
-  // async getMatchesOfUser(userId: string): Promise<Match[]> {
-  //   try {
-  //     const doc = await this.firestore.doc<Match>(`matches/${userId}`).get().toPromise();
-  //     if (doc && doc.exists) {
-  //       // Document exists, return it as an array
-  //       return [doc.data() as Match];
-  //     } else {
-  //       // Document doesn't exist, return an empty array
-  //       return [];
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching matches:', error);
-  //     // Handle the error as needed, e.g., show an error message
-  //     throw error; // Rethrow the error
-  //   }
-  // }
   
   async getMatchesOfUser(userId: string): Promise<Match[]> {
     try {
@@ -191,7 +169,7 @@ export class MatchesService {
           const wealth = matchedUserDoc['Stree Deergha Porutham'];
           const temperament = matchedUserDoc['Gana Porutham'];
           const children = matchedUserDoc['Mahendra Porutham'];
-          const compatibility = matchedUserDoc['Rasiaythipathi Porutham'];
+          const compatibility = matchedUserDoc['Rasiyathipathi Porutham'];
           const sex = matchedUserDoc['Yoni Porutham'];
           const total = matchedUserDoc.total;
 
@@ -201,7 +179,7 @@ export class MatchesService {
             "Wealth": wealth,
             "Temperament": temperament,
             "Children": children,
-            "Compatibility": 0,
+            "Compatibility": compatibility,
             "Sex": sex,
             "Total": total,
             "Rejected": match.rejected
