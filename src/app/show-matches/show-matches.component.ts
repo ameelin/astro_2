@@ -12,19 +12,34 @@ export class ShowMatchesComponent implements OnInit {
   currentUserId: string;
   selectedMatches: ShowMatch[] = [];
   rejectedMatches: ShowMatch[] = [];
+  displayedColumns: string[] = ["User Id", "Health", "Wealth", "Temperament", "Children", "Compatibility", "Sex", "Total"];
+  loadingMatches: boolean = true; 
 
   constructor(private matchService: MatchesService) {
     this.currentUserId = localStorage.getItem("userId")!;
   }
 
   ngOnInit(): void {
-    this.matchService.getMatchesOfUser(this.currentUserId).subscribe((matches: Match[]) => {
-      this.matchService.getShowMatches(this.currentUserId, matches).subscribe((showMatches: ShowMatch[]) => {
+    this.matchService.getMatchesOfUser(this.currentUserId)
+      .then((matches: Match[]) => {
+        // Matches data is available here, call getShowMatches with the data and userId
+        this.getShowMatches(this.currentUserId, matches);
+      })
+      .catch((error) => {
+        console.error('Error fetching matches:', error);
+      });
+  }
+  
+  private getShowMatches( userId: string, matches: Match[]): void {
+    this.matchService.getShowMatches(userId, matches)
+      .subscribe((showMatches: ShowMatch[]) => {
         // Sort the data by the 'total' property
         const sortedShowMatches = showMatches.sort((a, b) => b.Total - a.Total);
         this.selectedMatches = sortedShowMatches.filter(match => !match.Rejected);
         this.rejectedMatches = sortedShowMatches.filter(match => match.Rejected);
+        // Set loadingMatches to false once the data is loaded
+        this.loadingMatches = false;
       });
-    });
   }
+  
 }

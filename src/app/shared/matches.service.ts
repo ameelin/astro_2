@@ -126,15 +126,53 @@ export class MatchesService {
     return totalCompatibilityScore;
   }
 
-  getMatchesOfUser(userId: string): Observable<Match[]> {
-    return this.firestore.collection<Match>('matches', (ref) =>
-      ref.where('userId', '==', userId)
-    ).valueChanges();
-  }
-
-  // getMatchesOfUser(userId: string): Observable<Match | undefined> {
-  //   return this.firestore.collection<Match>('matches').doc(userId).valueChanges();
+  // getMatchesOfUser(userId: string): Observable<Match[]> {
+  //   return this.firestore.collection<Match>('matches', (ref) =>
+  //     ref.where('userId', '==', userId)
+  //   ).valueChanges();
   // }
+
+  // async getMatchesOfUser(userId: string): Promise<Match[]> {
+  //   try {
+  //     const doc = await this.firestore.doc<Match>(`matches/${userId}`).get().toPromise();
+  //     if (doc && doc.exists) {
+  //       // Document exists, return it as an array
+  //       return [doc.data() as Match];
+  //     } else {
+  //       // Document doesn't exist, return an empty array
+  //       return [];
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching matches:', error);
+  //     // Handle the error as needed, e.g., show an error message
+  //     throw error; // Rethrow the error
+  //   }
+  // }
+  
+  async getMatchesOfUser(userId: string): Promise<Match[]> {
+    try {
+      const doc = await this.firestore.doc(`matches/${userId}`).get().toPromise();
+      if (doc && doc.exists) {
+        const data = doc.data() as { userMatches: Match[] } | undefined;
+        if (data && data.userMatches) {
+          // Assuming 'userMatches' is an array of 'Match' objects
+          return data.userMatches;
+        } else {
+          // 'userMatches' doesn't exist or is not an array, return an empty array
+          return [];
+        }
+      } else {
+        // Document doesn't exist, return an empty array
+        return [];
+      }
+    } catch (error) {
+      console.error('Error fetching matches:', error);
+      // Handle the error as needed, e.g., show an error message
+      throw error; // Rethrow the error
+    }
+  }
+  
+  
   
 
   getShowMatches(userId: string, matches: Match[]): Observable<ShowMatch[]> {
@@ -158,15 +196,15 @@ export class MatchesService {
           const total = matchedUserDoc.total;
 
           const showMatch: ShowMatch = {
-            ['User Id']: match.userId,
-            ['Health']: health,
-            ['Wealth']: wealth,
-            ['Temperament']: temperament,
-            ['Children']: children,
-            ['Compatibility']: compatibility,
-            ['Sex']: sex,
-            ['Total']: total,
-            ['Rejected']: match.rejected
+            "User Id": match.userId,
+            "Health": health,
+            "Wealth": wealth,
+            "Temperament": temperament,
+            "Children": children,
+            "Compatibility": 0,
+            "Sex": sex,
+            "Total": total,
+            "Rejected": match.rejected
           };
 
           showMatches.push(showMatch);
@@ -176,6 +214,8 @@ export class MatchesService {
       return showMatches;
     })());
   }
+
+  
 
 
   private async findUserBirthStar(currentUserId: string): Promise<string> {
