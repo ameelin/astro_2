@@ -1,48 +1,64 @@
 <div class="show-matches-wrapper" fxLayout="row" fxLayoutAlign="center center">
   <mat-card class="match-table-box">
-    <!-- First Table: Selected Matches -->
-    <ng-container *ngIf="selectedMatches.length > 0; else noSelectedMatches">
-      <h2>Selected Matches</h2>
-      <mat-table [dataSource]="selectedMatches" matSort>
-        <!-- Define your table columns here -->
-        <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element[col] }}</mat-cell>
+<!-- First Table: Selected Matches -->
+<ng-container *ngIf="selectedMatches.length > 0; else noSelectedMatches">
+  <h2>Selected Matches</h2>
+  <mat-table [dataSource]="selectedMatches" matSort>
+    <!-- Define your table columns here -->
+    <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <!-- Conditionally apply icon styling based on the column name and value -->
+        <ng-container *ngIf="col !== 'Total' && col !== 'User Id'">
+          <mat-icon [ngClass]="element[col] === 1 ? 'mat-icon-success' : (element[col] === 0 ? 'mat-icon-error' : '')">
+            {{ element[col] === 1 ? 'check_circle' : (element[col] === 0 ? 'cancel' : '') }}
+          </mat-icon>
         </ng-container>
-        
-        <!-- Header Row for Selected Matches -->
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        
-        <!-- Row Definitions for Selected Matches -->
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
+        <ng-container *ngIf="col === 'Total' || col === 'User Id'">{{ element[col] }}</ng-container>
+      </mat-cell>
     </ng-container>
 
-    <ng-template #noSelectedMatches>
-      <p *ngIf="!loadingMatches">No Selected Matches</p>
-    </ng-template>
+    <!-- Header Row for Selected Matches -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-    <!-- Second Table: Rejected Matches -->
-    <ng-container *ngIf="rejectedMatches.length > 0; else noRejectedMatches">
-      <h2>Rejected Matches</h2>
-      <mat-table [dataSource]="rejectedMatches" matSort>
-        <!-- Define your table columns here -->
-        <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element[col] }}</mat-cell>
+    <!-- Row Definitions for Selected Matches -->
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</ng-container>
+
+<ng-template #noSelectedMatches>
+  <p *ngIf="!loadingMatches">No Selected Matches</p>
+</ng-template>
+
+<!-- Second Table: Rejected Matches -->
+<ng-container *ngIf="rejectedMatches.length > 0; else noRejectedMatches">
+  <h2>Rejected Matches</h2>
+  <mat-table [dataSource]="rejectedMatches" matSort>
+    <!-- Define your table columns here -->
+    <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <!-- Conditionally apply icon styling based on the column name and value -->
+        <ng-container *ngIf="col !== 'Total' && col !== 'User Id'">
+          <mat-icon [ngClass]="element[col] === 1 ? 'mat-icon-success' : (element[col] === 0 ? 'mat-icon-error' : '')">
+            {{ element[col] === 1 ? 'check_circle' : (element[col] === 0 ? 'cancel' : '') }}
+          </mat-icon>
         </ng-container>
-        
-        <!-- Header Row for Rejected Matches -->
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        
-        <!-- Row Definitions for Rejected Matches -->
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
+        <ng-container *ngIf="col === 'Total' || col === 'User Id'">{{ element[col] }}</ng-container>
+      </mat-cell>
     </ng-container>
 
-    <ng-template #noRejectedMatches>
-      <p *ngIf="!loadingMatches">No Rejected Matches</p>
-    </ng-template>
-    <button *ngIf="!loadingMatches" mat-raised-button color="primary" routerLink="/find-matches">Find Matches</button>
+    <!-- Header Row for Rejected Matches -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <!-- Row Definitions for Rejected Matches -->
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</ng-container>
+
+<ng-template #noRejectedMatches>
+  <p *ngIf="!loadingMatches">No Rejected Matches</p>
+</ng-template>
+<button *ngIf="!loadingMatches" mat-raised-button color="primary" routerLink="/find-matches">Find Matches</button>
   </mat-card>
 </div>
