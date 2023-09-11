@@ -20,7 +20,6 @@
 
     <ng-template #noSelectedMatches>
       <p *ngIf="!loadingMatches">No Selected Matches</p>
-      <button *ngIf="!loadingMatches" mat-raised-button color="primary" routerLink="/find-matches">Find Matches</button>
     </ng-template>
 
     <!-- Second Table: Rejected Matches -->
@@ -43,7 +42,7 @@
 
     <ng-template #noRejectedMatches>
       <p *ngIf="!loadingMatches">No Rejected Matches</p>
-      <button *ngIf="!loadingMatches" mat-raised-button color="primary" routerLink="/find-matches">Find Matches</button>
     </ng-template>
+    <button *ngIf="!loadingMatches" mat-raised-button color="primary" routerLink="/find-matches">Find Matches</button>
   </mat-card>
 </div>
