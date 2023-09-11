@@ -1,5 +1,5 @@
 export interface ShowMatch {
-    "User Id": string; 
+    "User": string; 
     "Health": number; 
     "Wealth": number; 
     "Temperament": number; 

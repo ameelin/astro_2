@@ -174,7 +174,7 @@ export class MatchesService {
           const total = matchedUserDoc.total;
 
           const showMatch: ShowMatch = {
-            "User Id": match.userId,
+            "User": match.userId,
             "Health": health,
             "Wealth": wealth,
             "Temperament": temperament,
