@@ -57,6 +57,7 @@ export class LoginComponent {
                   }
                   else{
                     localStorage.setItem('userId', this.email);
+                    this.userService.setUserName(this.email.split('@')[0]);
                     this.navigateTo('/edit-user');
                   }
                 },
@@ -73,6 +74,7 @@ export class LoginComponent {
                 () => {
                   // Logic after adding the user
                   localStorage.setItem('userId', this.email);
+                  this.userService.setUserName(this.email.split('@')[0]);
                   this.navigateTo('/edit-user');
                 },
                 (error) => {

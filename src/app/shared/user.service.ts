@@ -121,4 +121,8 @@ export class UserService {
   setUserName(newUserName: string) {
     this.userNameSubject.next(newUserName);
   }
+
+  getUserName(): string {
+    return this.userNameSubject.getValue();
+  }
 }
