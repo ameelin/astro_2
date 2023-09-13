@@ -13,10 +13,13 @@ export class ToolbarComponent {
   @Output() sidenavToggle = new EventEmitter<void>();
   @ViewChild('sidenav') sidenav!: MatSidenav;
   isLoggedIn = false;
-
+  userName = ''
   constructor(private auth : AuthService, private userService: UserService,private router : Router) {}
 
   ngOnInit() {
+    this.userService.userName$.subscribe((newUserName: string) => {
+      this.userName = newUserName;
+    });
     this.userService.userLoggedIn.subscribe((loggedIn) => {
        this.isLoggedIn = loggedIn;
     });
@@ -33,6 +36,7 @@ export class ToolbarComponent {
     localStorage.clear();
     this.router.navigate(['/login']);
     this.userService.setLoggedIn(false);
+    this.userService.setUserName('');
     this.sidenav.close();
   }
 }

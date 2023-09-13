@@ -9,7 +9,7 @@
     <div class="right-content" *ngIf="isLoggedIn">
       <div class="user-info">
         <mat-icon>account_circle</mat-icon>
-        <span class="username" [ngStyle]="{ color: isLoggedIn ? 'red' : 'white' }">John Doe</span>
+        <span class="username" [ngStyle]="{ color: isLoggedIn ? 'red' : 'white' }">{{userName}}</span>
       </div>
       <button mat-raised-button color="primary" (click)="logout()">Logout</button>
     </div>

@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { AngularFirestore, DocumentSnapshot } from '@angular/fire/compat/firestore';
-import { Observable, from } from 'rxjs';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
@@ -11,6 +11,9 @@ import 'firebase/compat/firestore';
 export class UserService {
   userLoggedIn: EventEmitter<boolean> = new EventEmitter<boolean>();
   isLoggedIn = false;
+  private userNameSubject = new BehaviorSubject<string>('');
+  userName$: Observable<string> = this.userNameSubject.asObservable();
+
   
   constructor(private firestore: AngularFirestore) { }
 
@@ -87,8 +90,13 @@ export class UserService {
         .get()
         .then((querySnapshot) => {
           if (!querySnapshot.empty) {
-            const userData = querySnapshot.docs[0].data() as { birthStar?: any };
-            return !!userData?.birthStar;
+            //set global userName
+            const userData = querySnapshot.docs[0].data() as { desiredUserName?: any };
+            if(!!userData?.desiredUserName){
+              this.setUserName(userData.desiredUserName);
+            }
+            const birthStarData = querySnapshot.docs[0].data() as { birthStar?: any };
+            return !!birthStarData?.birthStar;
           }
           return false;
         })
@@ -107,5 +115,10 @@ export class UserService {
     return this.firestore.collection('users', (ref) =>
       ref.where('userId', '!=', currentUserId).limit(limit)
     ).valueChanges();
+  }
+
+  
+  setUserName(newUserName: string) {
+    this.userNameSubject.next(newUserName);
   }
 }

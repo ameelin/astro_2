@@ -55,6 +55,7 @@ export class EditUserComponent implements OnInit {
       this.user.userId = localStorage.getItem("userId") ?? '';
       this.user.modifiedDate = new Date().toLocaleDateString('en-US');
       this.user.modifiedBy = this.user.userId;
+      this.userService.setUserName(this.user.desiredUserName);
 
       //Now update user data
       this.userService.editUser(this.user).subscribe(
