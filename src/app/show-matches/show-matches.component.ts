@@ -20,18 +20,11 @@ export class ShowMatchesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.matchService.getMatchesOfUser(this.currentUserId)
-      .then((matches: Match[]) => {
-        // Matches data is available here, call getShowMatches with the data and userId
-        this.getShowMatches(this.currentUserId, matches);
-      })
-      .catch((error) => {
-        console.error('Error fetching matches:', error);
-      });
+    this.getShowMatches(this.currentUserId);
   }
   
-  private getShowMatches( userId: string, matches: Match[]): void {
-    this.matchService.getShowMatches(userId, matches)
+  private getShowMatches( userId: string): void {
+    this.matchService.getUserMatches(userId)
       .subscribe((showMatches: ShowMatch[]) => {
         // Sort the data by the 'total' property
         const sortedShowMatches = showMatches.sort((a, b) => b.Total - a.Total);

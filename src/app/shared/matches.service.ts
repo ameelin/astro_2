@@ -126,7 +126,7 @@ export class MatchesService {
     return totalCompatibilityScore;
   }
 
-  
+  //Decommisioned func
   async getMatchesOfUser(userId: string): Promise<Match[]> {
     try {
       const doc = await this.firestore.doc(`matches/${userId}`).get().toPromise();
@@ -149,10 +149,8 @@ export class MatchesService {
       throw error; // Rethrow the error
     }
   }
-  
-  
-  
 
+  //Decommissioned func
   getShowMatches(userId: string, matches: Match[]): Observable<ShowMatch[]> {
     return from((async () => {
       const currentUserStar = await this.findUserBirthStar(userId);
@@ -193,8 +191,62 @@ export class MatchesService {
     })());
   }
 
-  
+  //this combines getMatchesOfUser() and getShowMatches()
+  getUserMatches(userId: string): Observable<ShowMatch[]> {
+    return from((async () => {
+      try {
+        const doc = await this.firestore.doc(`matches/${userId}`).get().toPromise();
+        if (doc && doc.exists) {
+          const data = doc.data() as { userMatches: Match[] } | undefined;
+          if (data && data.userMatches) {
+            const matches = data.userMatches;
 
+            const currentUserStar = await this.findUserBirthStar(userId);
+            const starCollection = this.firestore.collection(currentUserStar);
+            const showMatches: ShowMatch[] = [];
+            for (const match of matches) {
+              const matchedUserStar = await this.findUserBirthStar(match.userId);
+              const querySnapshot = await starCollection.ref.where('star', '==', matchedUserStar).get();
+
+              if (!querySnapshot.empty) {
+                const matchedUserDoc = querySnapshot.docs[0].data() as StarDocument;
+                const health = matchedUserDoc['Dina Porutham'];
+                const wealth = matchedUserDoc['Stree Deergha Porutham'];
+                const temperament = matchedUserDoc['Gana Porutham'];
+                const children = matchedUserDoc['Mahendra Porutham'];
+                const compatibility = matchedUserDoc['Rasiyathipathi Porutham'];
+                const sex = matchedUserDoc['Yoni Porutham'];
+                const total = matchedUserDoc.total;
+
+                const showMatch: ShowMatch = {
+                  "User": match.userId,
+                  "Health": health,
+                  "Wealth": wealth,
+                  "Temperament": temperament,
+                  "Children": children,
+                  "Compatibility": compatibility,
+                  "Sex": sex,
+                  "Total": total,
+                  "Rejected": match.rejected
+                };
+
+                showMatches.push(showMatch);
+              }
+            }
+
+            return showMatches;
+          }
+        }
+        // Document doesn't exist or no userMatches found, return an empty array
+        return [];
+      } catch (error) {
+        console.error('Error fetching user matches:', error);
+        throw error;
+      }
+    })());
+  }
+
+  
 
   private async findUserBirthStar(currentUserId: string): Promise<string> {
     try {
