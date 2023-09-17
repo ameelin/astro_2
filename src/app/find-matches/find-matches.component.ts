@@ -30,6 +30,7 @@ export class FindMatchesComponent implements OnInit {
   users: User[] = [];
   displayedUsers: User[] = [];
   currentUserId: string;
+  currentDisplayIndex: number = 0;
 
   constructor(private userService: UserService, private matchesService: MatchesService, private router: Router, private snackBar: MatSnackBar) {
     this.currentUserId = <string>localStorage.getItem('userId') || '';
@@ -74,6 +75,7 @@ export class FindMatchesComponent implements OnInit {
     // Handle left swipe action here
     this.matchesService.saveMatch(currentUserId, selectedUser, true, astroMethod);
     this.displayedUsers.shift();
+    this.currentDisplayIndex++;
     this.loadDisplayedUsers();
   }
 
@@ -83,6 +85,25 @@ export class FindMatchesComponent implements OnInit {
     // Handle right swipe action here
     this.matchesService.saveMatch(currentUserId, selectedUser, false, astroMethod);
     this.displayedUsers.shift();
+    this.currentDisplayIndex++;
     this.loadDisplayedUsers();
   }
+
+
+  skipUser(selectedUser: User) {
+    console.log('Skipped user:', selectedUser);
+    // Handle right swipe action here
+    this.displayedUsers.shift();
+    this.currentDisplayIndex++;
+    this.loadDisplayedUsers();
+  }
+
+
+  getEmailUsername(email: string): string {
+    if (email) {
+      return email.split('@')[0];
+    }
+    return '';
+  }
+  
 }

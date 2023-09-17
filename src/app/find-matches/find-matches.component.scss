@@ -58,6 +58,11 @@
     background-color: #2ecc71;
     color: white;
   }
+
+  .swipe-button.skip {
+    background-color: blue;
+    color: white;
+  }
   
   .active {
     transform: translateY(-20px);
@@ -68,6 +73,15 @@
   font-size: 24px; /* Adjust the font size as needed */
   font-weight: bold; /* Make the title bold */
   text-align: center; /* Center-align the title */
+}
+
+/* Add styling for the name in red */
+.name {
+  font-size: 16px;
+  color: red; /* Set the text color to red */
+  font-weight: bold;
+  text-align: center; /* Center-align the name */
+  margin-top: 10px; /* Add spacing between the title and name */
 }
 
   
