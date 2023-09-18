@@ -11,6 +11,7 @@ import { Match } from 'src/models/match.model';
   providedIn: 'root',
 })
 export class MatchesService {
+  MAX_USER_MATCHES_ALLOWED: number =6;
   constructor(private userService: UserService, private firestore: AngularFirestore) { }
 
   async saveMatch(
@@ -65,6 +66,9 @@ export class MatchesService {
             userMatches.push(matchData);
           }
 
+          // this keeps size to MAX_USER_MATCHES_ALLOWED
+          userMatches=this.filterAndRemoveMatches(userMatches);
+          
           // Update the user's matches document with the updated array
           userMatchesDocRef.update({ userMatches });
         } else {
@@ -78,6 +82,31 @@ export class MatchesService {
     }
     
   }
+
+  //used by saveMatch
+  filterAndRemoveMatches(userMatches: any[]): any[] {
+    // Check if there are more than 6 matches
+  if (userMatches.length > this.MAX_USER_MATCHES_ALLOWED) {
+      // Separate userMatches into accepted and rejected arrays
+      const accepted = userMatches.filter((match) => !match.rejected);
+      const rejected = userMatches.filter((match) => match.rejected);
+  
+      // Sort both accepted and rejected arrays by compatibility score in descending order
+      accepted.sort((a, b) => b.compatibilityScore - a.compatibilityScore);
+      rejected.sort((a, b) => b.compatibilityScore - a.compatibilityScore);
+  
+      // Merge accepted and rejected arrays while ensuring the total length is 6 or less
+      const mergedMatches = [...accepted, ...rejected].slice(0, 6);
+  
+      // Return the merged array as userMatches
+      return mergedMatches;
+    }
+  
+    // If there are 6 or fewer matches, return userMatches as is
+    return userMatches;
+  }
+  
+  
 
 
   async calculateCompatibilityScore(currentUserId: string, matchedUserStar: string, astroMethod: string): Promise<number> {
