@@ -7,9 +7,9 @@
       <div class="swipe-card-image" [style.backgroundImage]="user.photoURL ? 'url(' + user.photoURL + ')' : 'url(/assets/images/image-placeholder.png)'"></div>
 
       <div class="swipe-actions">
-        <button class="swipe-button left" (click)="swipeLeft(currentUserId, user,'Vedic')" *ngIf="i === 0">Reject</button>
+        <button class="swipe-button left" (click)="swipeLeft(currentUserId, user,'Vedic')" *ngIf="i === 0" [disabled]="isMatchRejected(user.userId)">Reject</button>
         <button class="swipe-button skip" (click)="skipUser(user)" *ngIf="i === 0">Skip</button>
-        <button class="swipe-button right" (click)="swipeRight(currentUserId, user,'Vedic')" *ngIf="i === 0">Select</button>
+        <button class="swipe-button right" (click)="swipeRight(currentUserId, user,'Vedic')" *ngIf="i === 0" [disabled]="!isMatchRejected(user.userId)">Select</button>
       </div>
     </div>
     <button mat-raised-button color="primary" routerLink="/show-matches">Show Matches</button>

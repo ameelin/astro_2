@@ -6,6 +6,8 @@ import { UserService } from '../shared/user.service';
 
 import { User } from '../../models/user.model';
 import { MatchesService } from '../shared/matches.service';
+import { from } from 'rxjs';
+import { Match } from 'src/models/match.model';
 
 
 @Component({
@@ -31,6 +33,7 @@ export class FindMatchesComponent implements OnInit {
   displayedUsers: User[] = [];
   currentUserId: string;
   currentDisplayIndex: number = 0;
+  userMatches:any;
 
   constructor(private userService: UserService, private matchesService: MatchesService, private router: Router, private snackBar: MatSnackBar) {
     this.currentUserId = <string>localStorage.getItem('userId') || '';
@@ -44,6 +47,18 @@ export class FindMatchesComponent implements OnInit {
         (users: unknown[]) => {
           this.users = users as User[]; // Explicitly cast to User[] type
           this.loadDisplayedUsers();
+
+          // Fetch user's matches and store them
+          from(this.matchesService.getMatchesOfUser(this.currentUserId)).subscribe(
+            (matches: Match[]) => {
+              this.userMatches = matches;
+            },
+            (error) => {
+              // Handle any errors that may occur during the HTTP request.
+              console.error('Error fetching matches:', error);
+            }
+          );
+
         },
         (error) => {
           // Handle any errors that may occur during the HTTP request.
@@ -105,5 +120,14 @@ export class FindMatchesComponent implements OnInit {
     }
     return '';
   }
+
+  isMatchRejected(userId: string): boolean {
+    // Find the match for the given userId
+    const match = this.userMatches.find((match: { userId: string; }) => match.userId === userId);
+  
+    // Return true if match exists and is rejected, false otherwise
+    return match ? match.rejected : false;
+  }
+  
   
 }

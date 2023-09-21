@@ -84,4 +84,13 @@
   margin-top: 10px; /* Add spacing between the title and name */
 }
 
+/* Add styles for the disabled state of swipe buttons */
+.swipe-button.left:disabled,
+.swipe-button.right:disabled {
+  background-color: #ccc; /* Set a gray background color for disabled buttons */
+  cursor: not-allowed; /* Change cursor to not-allowed for disabled buttons */
+  color: #888; /* Set a lighter text color for disabled buttons */
+}
+
+
   
