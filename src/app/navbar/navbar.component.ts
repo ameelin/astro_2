@@ -13,23 +13,36 @@ export class NavbarComponent {
     private snackBar: MatSnackBar
   ) {}
 
-  canNavigateToShowMatches(): boolean {
-    const userName = this.userService.getUserName();
-    return !!userName; // Returns true if userName is not empty or null
-  }
+  canNavigate(): boolean {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      return false; 
+    }
 
-  canNavigateToFindMatches(): boolean {
-    const userName = this.userService.getUserName();
-    return !!userName; // Returns true if userName is not empty or null
+    this.userService.checkBirthStarExists(userId).subscribe(
+      (birthStarExists) => {
+        if(birthStarExists){
+         return true;
+        }
+        return false;
+      },
+      (error) => {
+        // Handle error checking birthstar
+        alert(error.message);
+      });
+  
+      return false;
   }
+  
+  
 
   onLinkClick(linkName: string): void {
     const msgAddendum = " is disabled until 'Edit Self' add of 'Desired User Name'";
-    if (!this.canNavigateToShowMatches() && linkName === 'Show Matches') {
+    if (!this.canNavigate() && linkName === 'Show Matches') {
       this.showSnackBar("Show Matches"+msgAddendum);
     }
 
-    if (!this.canNavigateToFindMatches() && linkName === 'Find Matches') {
+    if (!this.canNavigate() && linkName === 'Find Matches') {
       this.showSnackBar("Find Matches"+msgAddendum);
     }
   }
