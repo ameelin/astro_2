@@ -68,12 +68,22 @@ export class UserService {
         .get()
         .then((querySnapshot) => {
           if (querySnapshot.empty) {
-            return null; // Document with the provided userId not found.
+            // Document with the provided userId not found.
+            console.log(`Document with userId '${userId}' not found.`);
+            return null; 
           }
-          return querySnapshot.docs[0].id;
+          const docId = querySnapshot.docs[0].id;
+          console.log(`Document ID for userId '${userId}': ${docId}`);
+          return docId;
+        })
+        .catch((error) => {
+          console.error('Error fetching docId:', error);
+          return null; // Return null in case of an error
         })
     );
   }
+
+  
 
 
   checkUserExists(userId: string): Observable<boolean> {

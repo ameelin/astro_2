@@ -61,6 +61,7 @@ export class EditUserComponent implements OnInit {
       this.userService.editUser(this.user).subscribe(
         () => {
           console.log(`User with ID ${this.user.userId} updated successfully!`);
+          localStorage.setItem('birthStarExists', "true");
           this.router.navigate(['/find-matches']);
         },
         (error) => {

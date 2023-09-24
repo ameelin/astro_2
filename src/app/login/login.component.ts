@@ -53,10 +53,12 @@ export class LoginComponent {
               this.userService.checkBirthStarExists(this.email).subscribe(
                 (birthStarExists) => {
                   if(birthStarExists){
+                    localStorage.setItem('birthStarExists', "true");
                     this.navigateTo('/find-matches');
                   }
                   else{
                     localStorage.setItem('userId', this.email);
+                    localStorage.setItem('birthStarExists', "false");
                     this.userService.setUserName(this.email.split('@')[0]);
                     this.navigateTo('/edit-user');
                   }

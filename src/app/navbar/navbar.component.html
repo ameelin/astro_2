@@ -1,11 +1,11 @@
 <mat-nav-list class="navigation-list">
   <a
-  [routerLink]="canNavigate() ? '/show-matches' : ''"
+  [routerLink]="canNavigate() ? '/show-matches' : '/edit-user'"
   (click)="onLinkClick('Show Matches')"
   mat-list-item
 >Show Matches</a>
 <a
-  [routerLink]="canNavigate() ? '/find-matches' : ''"
+  [routerLink]="canNavigate() ? '/find-matches' : '/edit-user'"
   (click)="onLinkClick('Find Matches')"
   mat-list-item
 >Find Matches</a>
