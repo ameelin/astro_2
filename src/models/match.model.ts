@@ -1,5 +1,6 @@
 export interface Match {
-    userId: string;
+    userId: string,
+    userName: string,
     astroMethod: string,
     compatibilityScore: number,
     rejected: boolean,

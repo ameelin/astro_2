@@ -1,5 +1,6 @@
 export interface ShowMatch {
     "User": string; 
+    "User Name":string;
     "Health": number; 
     "Wealth": number; 
     "Temperament": number; 

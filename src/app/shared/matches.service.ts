@@ -33,6 +33,7 @@ export class MatchesService {
     // Prepare match data
     const matchData = {
       userId: matchedUser.userId,
+      userName: matchedUser.desiredUserName,
       astroMethod: astroMethod,
       compatibilityScore: compatibilityScore,
       rejected: rejected,
@@ -202,6 +203,7 @@ export class MatchesService {
 
           const showMatch: ShowMatch = {
             "User": match.userId,
+            "User Name":match.userName,
             "Health": health,
             "Wealth": wealth,
             "Temperament": temperament,
@@ -249,6 +251,7 @@ export class MatchesService {
 
                 const showMatch: ShowMatch = {
                   "User": match.userId,
+                  "User Name": match.userName,
                   "Health": health,
                   "Wealth": wealth,
                   "Temperament": temperament,
