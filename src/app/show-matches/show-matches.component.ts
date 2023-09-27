@@ -9,10 +9,11 @@ import { Match } from 'src/models/match.model';
   styleUrls: ['./show-matches.component.scss']
 })
 export class ShowMatchesComponent implements OnInit {
+
   currentUserId: string;
   selectedMatches: ShowMatch[] = [];
   rejectedMatches: ShowMatch[] = [];
-  displayedColumns: string[] = ["User Name", "Health", "Wealth", "Temperament", "Children", "Compatibility", "Sex", "Total"];
+  displayedColumns: string[] = ["User Name", "Health", "Wealth", "Temperament", "Children", "Compatibility", "Sex", "Total",  "Actions"];
   loadingMatches: boolean = true; 
 
   constructor(private matchService: MatchesService) {
@@ -34,5 +35,29 @@ export class ShowMatchesComponent implements OnInit {
         this.loadingMatches = false;
       });
   }
+
+  deleteMatch(match:Match) {
+    throw new Error('Method not implemented.');
+  }
+
+  editMatch(match:Match) {
+    throw new Error('Method not implemented.');
+  }
+
+  openDialog(action: string, match: Match) {
+    if (action === 'Edit') {
+      // Handle edit action
+      console.log('Edit clicked for:', match);
+    } else if (action === 'Delete') {
+      // Handle delete action
+      console.log('Delete clicked for:', match);
+    }
+  }
+
+  debugAction(index: number) {
+    console.log(`Debug: Clicked on cell with index ${index}`);
+    // You can also log other variables or data for debugging purposes
+  }
+  
   
 }
