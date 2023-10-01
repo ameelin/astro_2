@@ -13,7 +13,10 @@ export class ShowMatchesComponent implements OnInit {
   currentUserId: string;
   selectedMatches: ShowMatch[] = [];
   rejectedMatches: ShowMatch[] = [];
-  displayedColumns: string[] = ["User Name", "Health", "Wealth", "Temperament", "Children", "Compatibility", "Sex", "Total",  "Actions"];
+  
+  selectedDisplayedColumns: string[] = ["User Name", "Health", "Wealth", "Temperament", "Children", "Compatibility", "Sex", "Total", "Actions"];
+  rejectedDisplayedColumns: string[] = ["User Name", "Health", "Wealth", "Temperament", "Children", "Compatibility", "Sex", "Total", "Actions"];
+
   loadingMatches: boolean = true; 
 
   constructor(private matchService: MatchesService) {
