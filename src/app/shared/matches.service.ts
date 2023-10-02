@@ -3,7 +3,7 @@ import { User } from '../../models/user.model';
 import { StarDocument } from '../../models/stardata.model';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { UserService } from './user.service';
-import { Observable, from, map } from 'rxjs';
+import { Observable, catchError, from, map, throwError } from 'rxjs';
 import { ShowMatch } from 'src/models/showmatch.model';
 import { Match } from 'src/models/match.model';
 
@@ -305,5 +305,29 @@ export class MatchesService {
       return ''; // Return an empty string or handle the error as needed
     }
   }
-  
+
+  async deleteMatch(currentMatchId: string, matchedUserId: string): Promise<void> {
+    try {
+      const matchesDocRef = this.firestore.collection('matches').doc(currentMatchId);
+      const matchesDoc = await matchesDocRef.get().toPromise();
+
+      if (matchesDoc && matchesDoc.exists) {
+        const userMatches: any[] = matchesDoc.get('userMatches') || [];
+
+        // Find the userMatch item with matching userId
+        const userMatch = userMatches.find(match => match.userId === matchedUserId);
+
+        if (userMatch) {
+          // Remove the userMatch item from the array
+          userMatches.splice(userMatches.indexOf(userMatch), 1);
+
+          // Update the matches document with the modified userMatches array
+          await matchesDocRef.update({ userMatches });
+        }
+      }
+    } catch (error) {
+      console.error('Error deleting match:', error);
+      throw error;
+    }
+  }
 }

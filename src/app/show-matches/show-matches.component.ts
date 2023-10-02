@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatchesService } from '../shared/matches.service';
 import { ShowMatch } from 'src/models/showmatch.model';
 import { Match } from 'src/models/match.model';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-show-matches',
@@ -19,7 +22,7 @@ export class ShowMatchesComponent implements OnInit {
 
   loadingMatches: boolean = true; 
 
-  constructor(private matchService: MatchesService) {
+  constructor(private router:Router, private activatedRoute: ActivatedRoute, private matchService: MatchesService, private dialog: MatDialog) {
     this.currentUserId = localStorage.getItem("userId")!;
   }
 
@@ -47,13 +50,37 @@ export class ShowMatchesComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-  openDialog(action: string, match: Match) {
+  openDialog(action: string, match: ShowMatch) {
+    //EDIT match
     if (action === 'Edit') {
       // Handle edit action
       console.log('Edit clicked for:', match);
-    } else if (action === 'Delete') {
-      // Handle delete action
-      console.log('Delete clicked for:', match);
+    }
+    //DELETE match
+    else if (action === 'Delete') {
+      const dialogConfig: MatDialogConfig = {
+        data: {
+          userName: match['User Name'],
+          userId: match['User'],
+          currentUserId: this.currentUserId,
+        },
+        disableClose: true, // Disable click outside to close
+      };
+  
+      const dialogRef = this.dialog.open(DeleteConfirmationComponent, dialogConfig);
+  
+      // Subscribe to the dialog result
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          // User confirmed deletion
+          console.log('Delete confirmed for:', match);
+          // Reload the current page
+          this.router.navigate(['.', { relativeTo: this.activatedRoute }]);
+        } else {
+          // User canceled deletion
+          console.log('Delete canceled');
+        }
+      });
     }
   }
 

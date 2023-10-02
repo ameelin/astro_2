@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
+    MatDialogModule,
   ],
 })
 export class MaterialModule { }

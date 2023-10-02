@@ -1,0 +1,22 @@
+.delete-confirmation {
+    text-align: center;
+  
+    h2 {
+      margin-top: 0;
+    }
+  
+    p {
+      margin: 16px 0;
+    }
+  
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+  
+      button {
+        margin: 0 8px;
+      }
+    }
+  }
+  

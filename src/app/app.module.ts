@@ -23,6 +23,7 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { provideStorage } from '@angular/fire/storage';
 import { getStorage } from 'firebase/storage';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
     ShowMatchesComponent,
     RegisterComponent,
     ForgotPasswordComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    DeleteConfirmationComponent
   ],
   imports: [
     BrowserModule,

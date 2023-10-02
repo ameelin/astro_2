@@ -4,5 +4,5 @@ export interface Match {
     astroMethod: string,
     compatibilityScore: number,
     rejected: boolean,
-    canOverwrite: boolean
+    canOverwrite: boolean,
   }
