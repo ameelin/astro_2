@@ -74,8 +74,7 @@ export class ShowMatchesComponent implements OnInit {
         if (result === true) {
           // User confirmed deletion
           console.log('Delete confirmed for:', match);
-          // Reload the current page
-          this.router.navigate(['.', { relativeTo: this.activatedRoute }]);
+          this.getShowMatches(this.currentUserId);
         } else {
           // User canceled deletion
           console.log('Delete canceled');
