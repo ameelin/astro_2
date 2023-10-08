@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatchesService } from '../shared/matches.service';
 
 @Component({
   selector: 'app-edit-match',
@@ -15,6 +16,7 @@ export class EditMatchComponent {
 
   constructor(
     public dialogRef: MatDialogRef<EditMatchComponent>,
+    private matchService: MatchesService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.userName = data.userName;
@@ -24,14 +26,20 @@ export class EditMatchComponent {
   }
 
   submitEdit(): void {
-    // Handle the submission logic here based on checkboxValue and rejected status
-    // For example, update the database with the new status
-    console.log(`Submit clicked for ${this.userName}, Rejected: ${this.rejected}, Checkbox Value: ${this.checkboxValue}`);
-
-    // Implement your database update logic here
-
-    // Close the dialog
-    this.dialogRef.close(true);
+    this.rejected = !this.rejected;
+    // Call the updateMatch method from your MatchService
+    this.matchService.updateMatch(this.currentUserId, this.matchUserId, this.rejected)
+    .then(() => {
+      // Handle successful update here if needed
+      // For example, update the UI or notify the parent component
+      this.dialogRef.close(true);
+    })
+    .catch((error) => {
+      // Handle error if the update fails
+      // You can show an error message or log the error
+      console.error('Update failed:', error);
+      this.dialogRef.close(false);
+    });
   }
 
   closeDialog(): void {

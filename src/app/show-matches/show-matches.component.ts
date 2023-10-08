@@ -75,7 +75,7 @@ export class ShowMatchesComponent implements OnInit {
       if (result === true) {
         // User confirmed edit or any other action
         console.log('Edit confirmed for:', match);
-        // You can perform additional actions here
+        this.getShowMatches(this.currentUserId);
       } else {
         // User canceled edit or any other action
         console.log('Edit canceled');

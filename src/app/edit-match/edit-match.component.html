@@ -1,12 +1,10 @@
 <form #editMatchForm="ngForm" (ngSubmit)="submitEdit()">
     <div class="edit-match-container">
       <h2 class="edit-match-title">
-        {{ rejected ? 'Accept' : 'Reject' }} {{ userName }}
+        {{ rejected ? 'Accept' : 'Reject' }} {{ userName }} ?
       </h2>
       <mat-checkbox name="agreeCheckbox" [ngModel]="checkboxValue" (ngModelChange)="checkboxValue = $event" class="edit-match-checkbox">I agree</mat-checkbox>
-
-  
-      <div class="edit-match-buttons">
+    <div class="edit-match-buttons">
         <button class="edit-match-cancel-button" mat-button color="warn" (click)="closeDialog()">Cancel</button>
         <button class="edit-match-submit-button" mat-raised-button color="primary" [disabled]="!checkboxValue">Submit</button>
       </div>
