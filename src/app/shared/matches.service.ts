@@ -330,4 +330,30 @@ export class MatchesService {
       throw error;
     }
   }
+
+  async updateMatch(currentMatchId: string, matchedUserId: string, rejected:boolean): Promise<void> {
+    try {
+      const matchesDocRef = this.firestore.collection('matches').doc(currentMatchId);
+      const matchesDoc = await matchesDocRef.get().toPromise();
+
+      if (matchesDoc && matchesDoc.exists) {
+        const userMatches: any[] = matchesDoc.get('userMatches') || [];
+
+        // Find the userMatch item with matching userId
+        const userMatch = userMatches.find(match => match.userId === matchedUserId);
+
+        if (userMatch) {
+          // update rejected value
+          userMatch.rejected = rejected;
+          // Update the matches document with the modified userMatches array
+          await matchesDocRef.update({ userMatches });
+        }
+      }
+    } catch (error) {
+      console.error('Error deleting match:', error);
+      throw error;
+    }
+  }
 }
+
+

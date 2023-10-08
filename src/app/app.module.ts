@@ -24,6 +24,7 @@ import { provideStorage } from '@angular/fire/storage';
 import { getStorage } from 'firebase/storage';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
+import { EditMatchComponent } from './edit-match/edit-match.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { DeleteConfirmationComponent } from './delete-confirmation/delete-confir
     RegisterComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
-    DeleteConfirmationComponent
+    DeleteConfirmationComponent,
+    EditMatchComponent
   ],
   imports: [
     BrowserModule,

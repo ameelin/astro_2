@@ -5,6 +5,7 @@ import { Match } from 'src/models/match.model';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EditMatchComponent } from '../edit-match/edit-match.component';
 
 @Component({
   selector: 'app-show-matches',
@@ -52,12 +53,42 @@ export class ShowMatchesComponent implements OnInit {
 
   openDialog(action: string, match: ShowMatch) {
     //EDIT match
-    if (action === 'Edit') {
+    if (action === 'Update') {
       // Handle edit action
-      console.log('Edit clicked for:', match);
+      console.log('Update clicked for:', match);
+      const dialogConfig: MatDialogConfig = {
+        data: {
+          userName: match['User Name'],
+          userId: match['User'],
+          currentUserId: this.currentUserId,
+          rejected: match.Rejected, 
+        },
+         disableClose: true, // Disable click outside to close
+      };
+
+         // Open the Edit Match dialog
+    const dialogRef = this.dialog.open(EditMatchComponent, dialogConfig);
+
+    // Subscribe to the dialog result if needed
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle the result if necessary
+      if (result === true) {
+        // User confirmed edit or any other action
+        console.log('Edit confirmed for:', match);
+        // You can perform additional actions here
+      } else {
+        // User canceled edit or any other action
+        console.log('Edit canceled');
+        // You can perform additional actions here
+      }
+    });
+  
+      
     }
     //DELETE match
     else if (action === 'Delete') {
+       // Handle edit action
+      console.log('Delete clicked for:', match);
       const dialogConfig: MatDialogConfig = {
         data: {
           userName: match['User Name'],

@@ -1,0 +1,39 @@
+/* edit-match.component.scss */
+
+/* Container styles */
+.edit-match-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* Title styles */
+  .edit-match-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  
+  /* Checkbox styles */
+  .edit-match-checkbox {
+    margin-bottom: 24px;
+  }
+  
+  
+  /* Button container styles */
+  .edit-match-buttons {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center-align buttons horizontally */
+    justify-content: center; /* Center-align buttons vertically */
+  }
+  
+  /* Submit button styles */
+  .edit-match-submit-button {
+    width: 100%;
+    margin-top: 16px;
+  }
