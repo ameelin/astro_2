@@ -1,0 +1,50 @@
+{
+    "userId": "john_doe1_id",
+    "matches": [
+     {
+      "userId": "jane_doe_id",
+      "scoreBreakdown": [
+       {
+        "astroMethod": "Vedic",
+        "compatibilityScore": {
+         "score": 80,
+         "rejected": false,
+         "canOverwrite": true
+        }
+       },
+       {
+        "astroMethod": "Numerology",
+        "compatibilityScore": {
+         "score": 75,
+         "rejected": false,
+         "canOverwrite": true
+        }
+       }
+      ]
+     },
+     {
+        "userId": "jane_doe2_id",
+        "scoreBreakdown": [
+         {
+          "astroMethod": "Vedic",
+          "compatibilityScore": {
+           "score": 30,
+           "rejected": true,
+           "canOverwrite": true
+          }
+         },
+         {
+          "astroMethod": "Numerology",
+          "compatibilityScore": {
+           "score": 15,
+           "rejected": true,
+           "canOverwrite": true
+          }
+         }
+        ]
+       }
+    ]
+}
+
+   
+

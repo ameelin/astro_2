@@ -1,0 +1,43 @@
+{
+    "dev": {
+      "firebase": {
+        "apiKey": "AIzaSyBCUdY9O2yDcsUo0bugVL5115ooDVokm_M",
+        "authDomain": "astro-f3a32.firebaseapp.com",
+        "projectId": "astro-f3a32",
+        "storageBucket": "astro-f3a32.appspot.com",
+        "messagingSenderId": "804063508906",
+        "appId": "1:804063508906:web:eae9986590b495646f13d3"
+      }
+    },
+    "test": {
+      "firebase": {
+        "apiKey": "test-api-key",
+        "authDomain": "test-auth-domain",
+        "projectId": "test-project-id",
+        "storageBucket": "test-storage-bucket",
+        "messagingSenderId": "test-messaging-sender-id",
+        "appId": "test-app-id"
+      }
+    },
+    "staging": {
+      "firebase": {
+        "apiKey": "staging-api-key",
+        "authDomain": "staging-auth-domain",
+        "projectId": "staging-project-id",
+        "storageBucket": "staging-storage-bucket",
+        "messagingSenderId": "staging-messaging-sender-id",
+        "appId": "staging-app-id"
+      }
+    },
+    "prod": {
+      "firebase": {
+        "apiKey": "prod-api-key",
+        "authDomain": "prod-auth-domain",
+        "projectId": "prod-project-id",
+        "storageBucket": "prod-storage-bucket",
+        "messagingSenderId": "prod-messaging-sender-id",
+        "appId": "prod-app-id"
+      }
+    }
+  }
+  

@@ -1,0 +1,30 @@
+To generate the serviceAccountKey.json file:
+
+Go to the Firebase Console (https://console.firebase.google.com) and select your project.
+Click on the "Project settings" gear icon.
+Navigate to the "Service Accounts" tab.
+Under the "Firebase Admin SDK" section, click on the "Generate new private key" button.
+This will download the serviceAccountKey.json file, which you can save and use for server-side authentication with the Firebase Admin SDK.
+Make sure to keep your serviceAccountKey.json file secure and do not share it publicly, as it provides privileged access to your Firebase project.
+
+create code akin to import_anusham.js
+cd to project root and do this at command line: npm install firebase-admin
+cd to where import_anusham.js is and do this at command line: node import_anusham.js
+
+To start server for correct env
+    - open environment.ts 
+    - change this line to have the correct env var
+    (change dev to test, staging etc - see that those have entries in angular.json under build and serve sections)
+    -const environment = envConfig['dev'];
+
+    -and then do ng serve --configuration=dev (or whatever other env you want)
+
+    Note:
+    We have one environment.ts file and one environment.config.json file with dev, test, staging and prod entries
+
+Cleaning star data
+    Firstly import data using import_generic.js (at cmd line, run node import_generic.js where script is located)
+    Secondly, run node cleandata.js " - 1st Pada":""
+    Thirdly, manually change name of collections to remove " - 1st Pada"(used firefoo for this)
+    Fourthly run, node createStarsCollection.js
+    Fifthly run, node createAstroMethodsCollection.js
