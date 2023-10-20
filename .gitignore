@@ -36,10 +36,11 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
-#/private
-#/scripts/firebase 
-#/src/assets/config/environment.config.json
+/private
+/scripts/firebase 
+/src/assets/config/environment.config.json
 
 # System files
 .DS_Store
 Thumbs.db
+private/astro-serviceAccountKey.json
